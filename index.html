@@ -3,276 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Étude Avancée : La Dilatation Temporelle et les Anomalies Historiques | E. Gerardot</title>
+    <title>Etan Gerardot | Analyse Temporelle Premium</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
     <style>
+        /* --- VARIABLES --- */
         :root {
-            /* Palette de couleurs professionnelle et contrastée */
-            --couleur-primaire: #0E2943; /* Bleu Nuit pour le fond/titres */
-            --couleur-secondaire: #F9FBFD; /* Fond très clair */
-            --couleur-texte: #333;
-            --couleur-accent: #FFCC00; /* Jaune/Or Vif pour l'emphase */
-            --couleur-bordure: #CCC;
-            --couleur-code: #EFEFEF;
+            --bg-deep: #020204;
+            --bg-card: rgba(20, 20, 25, 0.6);
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --gold: #D4AF37;
+            --cyan: #00F3FF;
+            --red: #FF3333;
+            --text-main: #E0E0E0;
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-tech: 'Share Tech Mono', monospace;
         }
+
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--couleur-secondaire);
-            color: var(--couleur-texte);
-            line-height: 1.75;
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 25%);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.8;
+            overflow-x: hidden;
         }
 
-        .conteneur {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0;
-            background: white;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            overflow: hidden; /* Pour contenir le header étendu */
+        /* --- SCROLL PROGRESS BAR --- */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: #000;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--cyan));
+            width: 0%;
+            animation: scrollProgress 1s linear; /* Animation gérée par JS idéalement, ici simulée */
         }
 
-        /* --- HEADER STYLED --- */
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 2, 4, 0.8);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo { font-family: var(--font-title); color: #fff; font-size: 1.2rem; letter-spacing: 2px; }
+        .nav-logo span { color: var(--gold); }
+        .nav-links a { margin-left: 30px; text-decoration: none; color: var(--text-main); font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--cyan); }
+
+        /* --- HERO SECTION --- */
         header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 50px 40px;
-            background-color: var(--couleur-primaire);
-            color: white;
             position: relative;
         }
-        
-        /* Effet visuel du sous-titre */
-        header p {
-            font-family: 'Source Code Pro', monospace;
-            font-size: 1.1em;
-            color: var(--couleur-accent);
-            margin-top: 15px;
-            letter-spacing: 1px;
-        }
 
-        header h1 {
-            font-size: 3.5em;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .auteur {
-            font-size: 1.2em;
-            margin-top: 20px;
-            color: #CFCFCF;
-        }
-        
-        .auteur strong {
-            color: white;
-            font-weight: 700;
-        }
-
-        /* --- CONTENU PRINCIPAL --- */
-        .content-body {
-            padding: 40px 60px;
-        }
-
-        section {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--couleur-bordure);
-            margin-bottom: 30px;
-        }
-        
-        section:last-of-type {
-            border-bottom: none; 
-        }
-
-        h2 {
-            color: var(--couleur-primaire);
-            font-size: 2em;
-            margin-top: 30px;
+        .hero-badge {
+            border: 1px solid var(--cyan);
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: var(--cyan);
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
             margin-bottom: 20px;
-            border-bottom: 3px solid var(--couleur-accent);
-            padding-bottom: 8px;
-            text-transform: uppercase;
-        }
-        
-        h3 {
-            color: var(--couleur-accent);
-            font-size: 1.35em;
-            margin-top: 25px;
-            padding-left: 10px;
-            font-weight: 700;
-        }
-        
-        h3::before {
-            content: '» ';
-            color: var(--couleur-primaire);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
 
-        /* --- LISTES ET INFOS --- */
-        ul {
-            list-style: none;
-            padding-left: 0;
+        h1 {
+            font-family: var(--font-title);
+            font-size: 5rem;
+            background: linear-gradient(to bottom, #ffffff, #666666);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        li {
-            margin-bottom: 15px;
-            padding: 12px 15px;
-            border-left: 5px solid var(--couleur-accent);
-            background: var(--couleur-code);
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
+        .hero-sub { color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 1rem; }
         
-        li:hover {
-            transform: translateX(5px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            animation: bounce 2s infinite;
+            color: var(--text-main);
+            font-size: 2rem;
         }
 
-        .fact-point {
-            font-weight: 700;
-            color: var(--couleur-primaire);
-            display: block;
-            margin-bottom: 5px;
-        }
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 120px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
         
-        .fact-point::before {
-            content: '🚀 '; /* Icône pour les points clés */
-            color: var(--couleur-accent);
+        h2 { font-size: 3rem; color: #fff; margin-bottom: 60px; font-family: var(--font-title); text-align: center; }
+        h2 span { color: var(--gold); }
+
+        /* --- CARDS & GLASS --- */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            transition: 0.4s ease;
         }
-        
-        strong {
-            color: var(--couleur-accent);
-            font-weight: 700;
+        .glass-card:hover { border-color: var(--cyan); box-shadow: 0 0 30px rgba(0, 243, 255, 0.1); transform: translateY(-5px); }
+
+        /* --- SECTION SCIENCE (GRID DASHBOARD) --- */
+        .science-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
         }
 
-        /* --- CADRE PARADOXE (MISE EN EVIDENCE) --- */
-        .cadre-paradoxe {
-            background-color: #fce4e4;
-            border: 2px solid var(--couleur-accent);
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 30px;
+        .stat-display {
+            font-family: var(--font-tech);
+            color: var(--cyan);
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-shadow: 0 0 10px var(--cyan);
+        }
+
+        .data-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* --- TIMELINE HISTORIQUE (VERTICALE) --- */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: var(--gold);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-deep);
+            border: 3px solid var(--gold);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+        .left::before { content: " "; height: 0; position: absolute; top: 22px; width: 0; z-index: 1; right: 30px; border: medium solid white; border-width: 10px 0 10px 10px; border-color: transparent transparent transparent var(--glass); }
+        .right::before { content: " "; height: 0; position: absolute; top: 22px; width: 0; z-index: 1; left: 30px; border: medium solid white; border-width: 10px 10px 10px 0; border-color: transparent var(--glass) transparent transparent; }
+        .right::after { left: -10px; }
+
+        .time-content {
+            padding: 20px 30px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        .year-badge {
+            background: var(--gold);
+            color: #000;
+            padding: 2px 10px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* --- PARADOXE ALERT --- */
+        .paradoxe-box {
+            border: 1px solid var(--red);
+            background: linear-gradient(45deg, rgba(50,0,0,0.5), transparent);
+            padding: 50px;
+            text-align: center;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .paradoxe-box::before {
+            content: "WARNING";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10rem;
+            opacity: 0.05;
+            color: var(--red);
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* --- QUOTE SECTION --- */
+        .quote-section {
+            text-align: center;
             font-style: italic;
-            color: #444;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
-        }
-        
-        .cadre-paradoxe strong {
-            color: #B30000;
-        }
-
-        /* --- CONCLUSION STYLED --- */
-        #conclusion ul li {
-            border-left: 5px solid var(--couleur-primaire);
-            background: none;
-        }
-        
-        #conclusion ul li:hover {
-            transform: none;
-            box-shadow: none;
+            font-size: 1.5rem;
+            color: #aaa;
+            border-left: none;
         }
 
         /* --- FOOTER --- */
         footer {
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 1px solid var(--couleur-bordure);
-            font-size: 0.9em;
-            color: #777;
+            padding: 50px;
+            border-top: 1px solid var(--border);
+            background: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ANIMATION */
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 768px) {
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 21px; }
+            .left::after, .right::after { left: 21px; }
+            .right { left: 0%; }
+            .science-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="conteneur">
-        
-        <header>
-            <h1>La Temporalité Déformée</h1>
-            <p>ÉTUDE : VOYAGE DANS LE TEMPS – PREUVES ET ÉNIGMES HISTORIQUES</p>
-            <div class="auteur">par : <strong>Etan Gerardot</strong></div>
-        </header>
+    <div class="progress-container"><div class="progress-bar" style="width: 75%"></div></div>
 
-        <div class="content-body">
-            
-            <section id="introduction">
-                <h2>Introduction</h2>
-                <p>Le voyage dans le temps est souvent relégué à la science-fiction. Pourtant, en utilisant les faits historiques et la physique moderne, on s'aperçoit que le voyage dans le temps **vers le futur est un fait avéré**, quoique minime, tandis que le voyage vers le passé repose sur des témoignages historiques inexpliqués et des paradoxes non résolus.</p>
-            </section>
-
-            <section id="scientifique">
-                <h2>I. Le Fait Scientifique : Les seuls voyageurs temporels confirmés de l'Histoire</h2>
-                <p>Contrairement aux idées reçues, le voyage dans le temps est une réalité physique documentée, mais il ne fonctionne que dans un sens : **vers le futur**, et à des échelles microscopiques.</p>
-
-                <h3>Le Fait Historique (Sergueï Krikalev) :</h3>
-                <ul>
-                    <li><span class="fact-point">Le cosmonaute russe Sergueï Krikalev</span> détient le record officieux du "plus grand voyageur temporel" de l'histoire humaine.</li>
-                    <li><span class="fact-point">L'Explication :</span> Selon la théorie de la Relativité d'Einstein, plus on se déplace vite et loin de la gravité terrestre, plus le temps ralentit pour nous par rapport à ceux restés sur Terre. [Visualisation : Courbure de l'espace-temps et dilatation]</li>
-                    <li><span class="fact-point">Le Résultat :</span> Après avoir passé 803 jours dans l'espace à une vitesse de 28 000 km/h, Krikalev a vieilli un tout petit peu moins vite que les Terriens. Il a officiellement voyagé de **0,02 seconde vers le futur**. C'est un fait scientifique : lorsqu'il est redescendu sur Terre, il était physiquement plus jeune d'un battement de cil que ce qu'il aurait dû être.</li>
-                </ul>
-                
-                <h3>L'Expérience de Hafele-Keating (1971) :</h3>
-                <ul>
-                    <li><span class="fact-point">Des physiciens ont placé des horloges atomiques ultra-précises</span> dans des avions faisant le tour du monde.</li>
-                    <li><span class="fact-point">À l'atterrissage,</span> les horloges n'indiquaient plus la même heure que celles restées au sol. Le voyage dans le temps (dilatation) est donc un fait prouvé historiquement. [Visualisation : Configuration de l'expérience Hafele-Keating]</li>
-                </ul>
-            </section>
-
-            <section id="enigmes">
-                <h2>II. Les Énigmes Historiques : Les "Glitchs" temporels documentés</h2>
-                <p>L'histoire regorge de récits étranges où des personnes affirment avoir glissé dans le passé. Même si les historiens restent sceptiques, ces cas sont documentés précisément.</p>
-
-                <h3>L'Incident du Moberly-Jourdain (10 août 1901) :</h3>
-                <ul>
-                    <li><span class="fact-point">C'est le cas le plus célèbre.</span> Deux universitaires britanniques respectées, Charlotte Moberly et Eleanor Jourdain, visitent le château de Versailles.</li>
-                    <li><span class="fact-point">Le Phénomène :</span> En se perdant dans les jardins du Petit Trianon, elles affirment que l'ambiance a changé brusquement : le paysage est devenu plat, sans ombre, et elles ont croisé des gens vêtus comme au XVIIIe siècle, dont une femme qui ressemblait à Marie-Antoinette.</li>
-                    <li><span class="fact-point">L'Analyse :</span> Elles ont écrit un livre (*An Adventure*) jurant que c'était vrai. Les sceptiques parlent d'hallucination collective ou d'une reconstitution historique qu'elles auraient croisée sans le savoir. Mais pour elles, elles ont physiquement marché dans l'année 1792.</li>
-                </ul>
-
-                <h3>Le "Hipster" du Pont de South Fork (1941) :</h3>
-                <ul>
-                    <li><span class="fact-point">Il existe une photo célèbre</span> prise en 1941 lors de la réouverture d'un pont au Canada.</li>
-                    <li><span class="fact-point">L'Anomalie :</span> Au milieu de la foule en chapeaux et costumes des années 40, un homme semble anachronique : il porte des lunettes de soleil modernes, un t-shirt imprimé et tient un appareil photo portable. [Photo : Le "Voyageur Temporel" du pont de South Fork]</li>
-                    <li><span class="fact-point">La Réalité Historique (Debunking) :</span> Bien que surnommé le "voyageur temporel", les historiens ont prouvé que ses lunettes (style alpiniste) et son appareil (Kodak Folding Pocket) existaient bien en 1941, bien que rares. C'est un cas où notre cerveau veut voir un voyageur temporel là où il n'y a qu'une mode avant-gardiste.</li>
-                </ul>
-            </section>
-
-            <section id="absurde">
-                <h2>III. La Preuve par l'Absurde : L'expérience de Stephen Hawking</h2>
-                <p>Si le voyage dans le passé était possible, où sont les touristes du futur ? Un événement historique a tenté de répondre à cette question.</p>
-
-                <h3>La Fête des Voyageurs Temporels (28 juin 2009) :</h3>
-                <ul>
-                    <li><span class="fact-point">Le physicien Stephen Hawking</span> a organisé une fête à l'Université de Cambridge. Il y avait du champagne et des ballons.</li>
-                    <li><span class="fact-point">Le Détail Crucial :</span> Il n'a envoyé les invitations qu'**après** la fin de la fête.</li>
-                    <li><span class="fact-point">Le Raisonnement :</span> Si le voyage dans le temps est inventé un jour (dans 100 ou 1000 ans), quelqu'un devrait trouver l'invitation dans les archives et revenir à ce moment précis pour participer.</li>
-                    <li><span class="fact-point">Le Résultat :</span> Personne n'est venu. Hawking a conclu : **"C'est la preuve expérimentale que le voyage dans le passé n'est pas possible."**</li>
-                </ul>
-
-                <div class="cadre-paradoxe">
-                    <strong>Rappel Théorique : Le Paradoxe du Grand-Père</strong>
-                    <p>Le paradoxe pose la question suivante : Si un voyageur empêche ses grands-parents de se rencontrer dans le passé, il crée une contradiction logique immédiate. Il n'existerait plus, et n'aurait donc pas pu voyager. C'est l'argument logique principal qui entrave la théorie du voyage vers le passé.</p>
-                </div>
-            </section>
-
-            <section id="conclusion">
-                <h2>Conclusion</h2>
-                <ul>
-                    <li><span class="fact-point">Synthèse 1 :</span> Le voyage vers le **futur** est possible et prouvé (dilatation du temps), mais il nécessite des vitesses inaccessibles pour être significatif.</li>
-                    <li><span class="fact-point">Synthèse 2 :</span> Le voyage vers le **passé** relève du mythe ou de l'hallucination (Incident de Versailles).</li>
-                    <li><span class="fact-point">Synthèse 3 :</span> L'histoire nous montre surtout que nous cherchons désespérément à échapper à notre présent, transformant des photos banales (le Hipster de 1941) en preuves fantastiques.</li>
-                </ul>
-            </section>
-
-            <footer>
-                <p>&copy; 2025 – Étude par Etan Gerardot. Tous droits réservés.</p>
-            </footer>
-
+    <nav>
+        <div class="nav-logo">GERARDOT<span>.LABS</span></div>
+        <div class="nav-links">
+            <a href="#physique">Physique</a>
+            <a href="#histoire">Histoire</a>
+            <a href="#paradoxe">Paradoxe</a>
         </div>
-    </div>
+    </nav>
 
+    <header>
+        <div class="hero-badge">THÈSE OFFICIELLE 2025</div>
+        <h1>LE VOYAGE<br>TEMPOREL</h1>
+        <p class="hero-sub">Entre Preuves Physiques & Énigmes Historiques</p>
+        <p style="margin-top: 20px; color: #666;">Une étude approfondie par <strong style="color: #fff;">Etan Gerardot</strong></p>
+        <div class="scroll-down">↓</div>
+    </header>
+
+    <section class="quote-section">
+        <div class="container">
+            <p>"La distinction entre le passé, le présent et le futur n'est qu'une illusion, aussi tenace soit-elle."</p>
+            <p style="font-size: 1rem; color: var(--gold); margin-top: 15px;">— Albert Einstein</p>
+        </div>
+    </section>
+
+    <section id="physique">
+        <div class="container">
+            <h2>I. PREUVES <span>SCIENTIFIQUES</span></h2>
+            
+            <div class="science-grid">
+                <div class="glass-card">
+                    <h3 style="color: #fff; font-family: var(--font-title);">Sujet : S. Krikalev</h3>
+                    <p style="color: #888; margin-bottom: 20px;">Cosmonaute & Voyageur Temporel</p>
+                    
+                    <div class="data-label">Vitesse Orbitale</div>
+                    <div class="stat-display">28 000 <span style="font-size:1rem;">km/h</span></div>
+                    
+                    <div class="data-label">Durée Mission</div>
+                    <div class="stat-display">803 <span style="font-size:1rem;">Jours</span></div>
+
+                    <hr style="border-color: var(--border); margin: 20px 0;">
+                    
+                    <div class="data-label">DÉCALAGE TEMPOREL CONFIRMÉ</div>
+                    <div class="stat-display" style="color: var(--gold);">+0.02 <span style="font-size:1rem;">sec</span></div>
+                    <p style="font-size: 0.8rem; margin-top: 10px;"> <br><em>Le sujet est physiquement plus jeune que ses homologues terrestres.</em></p>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="color: var(--cyan);">L'Expérience Hafele-Keating</h3>
+                    <p style="margin-top: 20px;">En 1971, Joseph Hafele et Richard Keating ont embarqué des horloges atomiques au Césium à bord d'avions commerciaux faisant le tour de la Terre.</p>
+                    <br>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 15px; border-left: 2px solid var(--cyan); padding-left: 15px;">
+                            <strong style="color: #fff;">Hypothèse :</strong> La vitesse et la gravité affectent l'écoulement du temps.
+                        </li>
+                        <li style="margin-bottom: 15px; border-left: 2px solid var(--gold); padding-left: 15px;">
+                            <strong style="color: #fff;">Résultat :</strong> Les horloges volantes retardaient sur les horloges au sol.
+                        </li>
+                    </ul>
+                    <div style="margin-top: 30px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
+                        
+                        <p style="font-size: 0.8rem; color: #888;">Schéma de synchronisation des horloges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="histoire">
+        <div class="container">
+            <h2>II. GLITCHS <span>HISTORIQUES</span></h2>
+            
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="time-content">
+                        <span class="year-badge">1792 / 1901</span>
+                        <h3>L'Incident Moberly-Jourdain</h3>
+                        <p>Visite du Petit Trianon à Versailles. Les deux universitaires rapportent une ambiance "lourde", un paysage sans ombre et la rencontre de personnages du XVIIIe siècle.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="time-content">
+                        <span class="year-badge">1941</span>
+                        <h3>Le Hipster du Pont</h3>
+                        <p>Canada. Une photo révèle un homme au look anachronique (Lunettes noires, T-shirt, Kodak portable). <br><span style="color:var(--red)">Debunked :</span> Tous ses accessoires existaient à l'époque.</p>
+                        <p style="margin-top:10px; font-size:0.8rem;"></p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="time-content">
+                        <span class="year-badge">2009</span>
+                        <h3>La Fête de Stephen Hawking</h3>
+                        <p>Hawking organise une fête pour voyageurs temporels mais n'envoie l'invitation que le lendemain. Personne n'est venu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="paradoxe">
+        <div class="container">
+            <div class="paradoxe-box">
+                <h2 style="margin-bottom: 20px; color: var(--red);">LE PARADOXE DU GRAND-PÈRE</h2>
+                <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+                    Si vous remontez le temps pour empêcher la rencontre de vos grands-parents, vous ne naissez jamais. Si vous ne naissez pas, vous ne pouvez pas remonter le temps.
+                </p>
+                <div style="margin-top: 40px; font-family: var(--font-tech); color: var(--text-main);">
+                    [ STATUS : BOUCLE CAUSALE DÉTECTÉE ]<br>
+                    [ ACTION : VOYAGE VERS LE PASSÉ IMPOSSIBLE ]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align: center; padding: 60px 0;">
+        <h3 style="font-size: 2rem; margin-bottom: 20px;">CONCLUSION</h3>
+        <p style="max-width: 600px; margin: 0 auto; color: #aaa;">
+            Le voyage vers le futur est une réalité physique (Krikalev). Le voyage vers le passé reste une impossibilité logique et une fascination humaine.
+        </p>
+    </section>
+
+    <footer>
+        <div style="font-family: var(--font-tech); color: #666;">
+            ID RAPPORT : #TG-2025-ALPHA
+        </div>
+        <div style="text-align: right;">
+            <p style="color: #fff;">ETAN GERARDOT</p>
+            <p style="font-size: 0.8rem; color: #666;">© 2025 Gerardot Labs. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Petit script pour animer la barre de progression au scroll
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.querySelector(".progress-bar").style.width = scrolled + "%";
+        };
+    </script>
 </body>
 </html>
